@@ -1,0 +1,22 @@
+use("platzi_store")
+
+//ahora vamos a agregar dinamicamente esos items
+db.orders.updateOne(
+    {_id: ObjectId('63c196789e351c941c525259')},
+    {
+        $push: {
+            items: {
+                name: 'product 2',
+                price: 45,
+                qty: 3,
+                product_id: ObjectId('63c18ae987c928b299368434')
+            }
+        },
+            $inc: {
+                total: 45*3
+            }
+    }
+)
+//63c196789e351c941c525259
+
+//63c18ae987c928b299368434 otro producto a agregar

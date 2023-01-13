@@ -1,0 +1,22 @@
+use("platzi_store")
+
+db.stores.findOne({
+    storeId:'ST001'
+})
+
+db.stores_details.findOne({
+    storeId:'ST001'
+})
+
+//para obtener los detalles y poder consultar sin tener que realizar consultas por separado, vamos a utilizar el aggregation framework
+
+db.stores.aggregate([
+    {
+        $lookup: {
+          from: 'stores_details',
+          localField: 'storeId',
+          foreignField: 'storeId',
+          as: 'detail'
+        }
+    }
+])

@@ -1,0 +1,32 @@
+use("platzi_store")
+
+//db.getCollectionInfos() //consultar por la informacion de un schema
+
+db.runCommand({
+    collMod: 'users',//Modificar collection
+    validator: { //y sin importar la modificacion que queramos hacer, hay que colocar todo el schema de validacion para que lo sobreescriba
+        $jsonSchema: {
+            bsonType: 'object',
+            required: ['email', 'password', 'role'],
+            additionalProperties: true,
+            properties: {
+                name: {bsonType: 'string'},
+                last_name: {bsonType: 'string'},               
+                email: {bsonType: 'string'},
+                password: {
+                    bsonType: 'string',
+                    pattern: "^[A-Za-z0-9]{8,}$"
+                },
+                age: {
+                    bsonType: 'number',
+                    minimum: 18,
+                    maximum: 99
+                },
+                isSingle: {bsonType: 'bool'},
+                role: {
+                    enum: ['customer', 'seller', 'admin']
+                }
+            }
+        }
+    }
+})

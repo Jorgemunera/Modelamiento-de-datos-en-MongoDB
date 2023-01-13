@@ -1,0 +1,39 @@
+use("platzi_store")
+
+db.users.find()
+db.orders.find()
+db.orders.find({
+    user_id: ObjectId('63c165ccaa27e50085d35d2b')
+})
+
+db.orders.aggregate([//voy a consultar desde orders
+    {
+        $match: {//utilizamos esta funcion para indicar el query
+          _id: ObjectId('63c16ccc07da84692fec8431')
+        }
+    },
+    {
+        $lookup: {
+          from: 'users', //la relacion con la otra entidad, users
+          localField: 'user_id', //el campo en mi entidad con el que se relaciona
+          foreignField: '_id', //el campo en users
+          as: 'user' //el alias que queremos dar
+        }
+    }
+])
+
+db.users.aggregate([//voy a consultar desde users
+    {
+        $match: {//utilizamos esta funcion para indicar el query
+          _id: ObjectId('63c1656be362e371c8e95a45')
+        }
+    },
+    {
+        $lookup: {
+          from: 'orders', //la relacion con la otra entidad, users
+          localField: '_id', //el campo en mi entidad con el que se relaciona
+          foreignField: 'user_id', //el campo en la otra entidad orders
+          as: 'order' //el alias que queremos dar
+        }
+    }
+])

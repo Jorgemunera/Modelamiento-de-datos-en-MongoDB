@@ -1,0 +1,20 @@
+use("platzi_store")
+
+db.stores.insertMany([
+    {
+        name: "store 1",
+        products_ids: [
+            ObjectId('63c06eb5fead2dfa997f6e3a'),
+            ObjectId('63c18ae987c928b299368434')           
+            ]
+    },
+    {
+        name: "store 2",
+        products_ids: [
+            ObjectId('63c06eb5fead2dfa997f6e3a'),
+            ObjectId('63c18ae987c928b299368433'),
+            ObjectId('63c18ae987c928b299368434'),
+            ObjectId('63c18ae987c928b299368435') 
+        ]
+    },
+])

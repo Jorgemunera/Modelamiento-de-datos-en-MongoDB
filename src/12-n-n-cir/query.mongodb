@@ -1,0 +1,18 @@
+use("platzi_store")
+
+db.products.find()
+db.stores.find()
+//vamos a actualizar un producto para referenciarle un store
+//63c18ae987c928b299368433 product
+//63c18c90fe4c4f90193fbf3c store
+
+db.products.aggregate([
+  {
+    $lookup: {
+      from: 'stores', //queremos consultar hacia la otra entidad
+      localField: 'stores_ids', //en mi entidad el campo que referencia a la otra
+      foreignField: '_id',//el atributo en la otra entidad que referenica
+      as: 'stores' //el alias que le quiero dar
+    }
+  }
+])
